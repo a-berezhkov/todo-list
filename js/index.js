@@ -6,7 +6,6 @@ import {
   todoList,
 } from "./create.js";
 
-
 function createTask() {
   todoButton.addEventListener("click", () => {
     const id = String(Date.now());
@@ -24,9 +23,10 @@ function createTask() {
     //если инпут не пустой то пушим объект в localStorage
     todoInput.value !== ""
       ? tasks.push(task)
-      : (todoInput.placeholder = "Строка пустая, задачи нет...");
+      : (todoInput.style.border = "1px solid #DC3545");
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
+    todoInput.value = "";
     console.log(tasks);
   });
 }
