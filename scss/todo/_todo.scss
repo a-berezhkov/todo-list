@@ -1,0 +1,123 @@
+.todo {
+  width: 594px;
+  background: #ffffff;
+  box-shadow: 0px 8px 35px rgba(0, 0, 0, 0.16);
+  border-radius: 16px;
+  &__top {
+    padding: 24px;
+    border-bottom: 1px solid #dee2e6;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__input {
+    width: 356px;
+    height: 38px;
+    background: #ffffff;
+    border: 1px solid $border;
+    border-radius: 4px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 13px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 21px;
+    color: $text;
+  }
+  &__button {
+    width: 166px;
+    height: 39px;
+    border: none;
+    background-color: $dark;
+    border-radius: 4px;
+    color: #fff;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    transition: all 0.3s;
+    cursor: pointer;
+    &:hover {
+      background-color: lighten($dark, 10%);
+    }
+  }
+  &__list {
+    padding: 32px 24px;
+  }
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 21px;
+  }
+  &__item:not(:last-child) {
+    margin-bottom: 26px;
+  }
+  &__task-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 1px solid #dee2e6;
+    border-radius: 2px;
+  }
+  &__task-checkbox:checked ~ .todo__task-label {
+    text-decoration:line-through;
+    opacity: 0.5;
+  }
+  &__task-label {
+    color: $text;
+    display: flex;
+    align-items: center;
+  }
+  &__task-del {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 21px;
+    height: 16px;
+  }
+  &__bottom {
+    padding: 18px 24px;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 0px 0px 16px 16px;
+  }
+  &__del-completed {
+    background-color: $secondary;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: darken($secondary, 10%);
+    }
+  }
+  &__del-all {
+    background-color: $primary;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: #ffffff;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    &:hover {
+      background-color: darken($primary, 10%);
+    }
+  }
+}

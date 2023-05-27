@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles/index.css" />
+    <title>ToDo List</title>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container">
+        <h1 class="header__title">ToDo List</h1>
+      </div>
+    </header>
+    <main class="main">
+      <div class="container">
+        <div class="todo">
+          <div class="todo__top">
+            <input class="todo__input" type="text" placeholder="Задача" />
+            <button class="todo__button">Добавить</button>
+          </div>
+          <ul class="todo__list">
+            <li class="todo__item">
+              <input class="todo__task-checkbox" type="checkbox" id="1"/>
+              <label class="todo__task-label" for="1"
+                >Сделать
+                удаление каждого элемента по крестику справа
+              </label>
+              <button class="todo__task-del">❌</button>
+            </li>
+            
+          </ul>
+          <div class="todo__bottom">
+            <button class="todo__del-completed">Удалить завершенные</button>
+            <button class="todo__del-all">Удалить все</button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="./js/index.js"></script>
+  </body>
+</html>

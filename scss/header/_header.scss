@@ -1,0 +1,13 @@
+.header {
+  margin-top: 80px;
+  margin-bottom: 33px;
+  &__title {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 58px;
+    line-height: 70px;
+    color: #000000;
+    text-align: center;
+  }
+}
