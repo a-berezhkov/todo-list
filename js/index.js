@@ -1,33 +1,43 @@
+import { renderTask } from "./render.js";
 import {
   todoInput,
   todoButton,
   todoButtonDelCompleted,
   todoButtonDelAll,
   todoList,
+  todoMain,
 } from "./create.js";
+
+let tasks = JSON.parse(localStorage.getItem("tasks"));
+
+tasks === null
+  ? (tasks = [])
+  : tasks && todoMain.classList.remove("todo__hidden");
 
 function createTask() {
   todoButton.addEventListener("click", () => {
     const id = String(Date.now());
-    let tasks = localStorage.getItem("tasks");
 
-    //если localStorage пустой то записываем  в него пустой масив
-    //иначе получаем массив с объектами
-    tasks === null ? (tasks = []) : (tasks = JSON.parse(tasks));
-
-    let task = {};
-    task.text = todoInput.value.trim();
+    const task = {};
+    task.text = todoInput.value;
     task.cheked = false;
     task.id = id;
 
-    //если инпут не пустой то пушим объект в localStorage
     todoInput.value !== ""
       ? tasks.push(task)
       : (todoInput.style.border = "1px solid #DC3545");
-    localStorage.setItem("tasks", JSON.stringify(tasks));
 
+    localStorage.setItem("tasks", JSON.stringify(tasks));
     todoInput.value = "";
-    console.log(tasks);
+    todoList.innerHTML = "";
+    render();
   });
 }
 createTask();
+
+function render() {
+  tasks.forEach((task) => {
+    renderTask(task.text, task.id);
+  });
+}
+render();

@@ -36,14 +36,13 @@ const todoButton = document.createElement("button");
 todoButton.classList.add("todo__button");
 todoButton.textContent = "Добавить";
 
-todoTopDiv.append(todoInput);
-todoTopDiv.append(todoButton);
-todoDiv.append(todoTopDiv);
+const todoMain = document.createElement("div");
+todoMain.classList.add("todo__main");
+todoMain.classList.add("todo__hidden");
+
 
 const todoList = document.createElement("ul");
 todoList.classList.add("todo__list");
-
-todoDiv.append(todoList);
 
 const todoBottom = document.createElement("div");
 todoBottom.classList.add("todo__bottom");
@@ -56,9 +55,19 @@ const todoButtonDelAll = document.createElement("button");
 todoButtonDelAll.classList.add("todo__del-all");
 todoButtonDelAll.textContent = "Удалить все";
 
+
+todoTopDiv.append(todoInput);
+todoTopDiv.append(todoButton);
+
+
 todoBottom.append(todoButtonDelCompleted);
 todoBottom.append(todoButtonDelAll);
-todoDiv.append(todoBottom);
+
+todoMain.append(todoList);
+todoMain.append(todoBottom);
+
+todoDiv.append(todoTopDiv);
+todoDiv.append(todoMain);
 
 containerMainDiv.append(todoDiv);
 mainDiv.append(containerMainDiv);
@@ -70,4 +79,5 @@ export {
   todoButtonDelCompleted,
   todoButtonDelAll,
   todoList,
+  todoMain,
 };

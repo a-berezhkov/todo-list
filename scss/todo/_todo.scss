@@ -3,6 +3,7 @@
   background: #ffffff;
   box-shadow: 0px 8px 35px rgba(0, 0, 0, 0.16);
   border-radius: 16px;
+  margin-bottom: 33px;
   &__top {
     padding: 24px;
     border-bottom: 1px solid #dee2e6;
@@ -55,14 +56,19 @@
   &__item:not(:last-child) {
     margin-bottom: 26px;
   }
+  &__box {
+    display: flex;
+    align-items: center;
+  }
   &__task-checkbox {
     width: 16px;
     height: 16px;
     border: 1px solid #dee2e6;
     border-radius: 2px;
+    margin-right: 16px;
   }
   &__task-checkbox:checked ~ .todo__task-label {
-    text-decoration:line-through;
+    text-decoration: line-through;
     opacity: 0.5;
   }
   &__task-label {
@@ -119,5 +125,8 @@
     &:hover {
       background-color: darken($primary, 10%);
     }
+  }
+  &__hidden {
+    display: none;
   }
 }
