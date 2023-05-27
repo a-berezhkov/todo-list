@@ -1,3 +1,4 @@
+const root = document.querySelector("#root");
 //create header
 const headerDiv = document.createElement("div");
 headerDiv.classList.add("header");
@@ -62,3 +63,11 @@ todoDiv.append(todoBottom);
 containerMainDiv.append(todoDiv);
 mainDiv.append(containerMainDiv);
 root.append(mainDiv);
+
+export {
+  todoInput,
+  todoButton,
+  todoButtonDelCompleted,
+  todoButtonDelAll,
+  todoList,
+};
