@@ -102,6 +102,22 @@ ul[class] {
   margin-right: 16px;
   cursor: pointer;
 }
+.todo__input-edit {
+  width: 450px;
+  height: 38px;
+  background: #ffffff;
+  border: 1px solid #CED4DA;
+  border-radius: 4px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+  padding-left: 13px;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 21px;
+  color: #54595E;
+}
 .todo__task-checkbox:checked ~ .todo__task-label {
   text-decoration: line-through;
   opacity: 0.5;
@@ -111,12 +127,21 @@ ul[class] {
   display: flex;
   align-items: center;
 }
-.todo__task-del {
+.todo__task-del, .todo__task-edit, .todo__task-edit-done {
   background-color: transparent;
   border: none;
   cursor: pointer;
   width: 21px;
   height: 16px;
+  transition: all 0.3s;
+}
+.todo__task-del:hover, .todo__task-edit:hover, .todo__task-edit-done:hover {
+  font-size: 16px;
+}
+.todo__box-btn {
+  width: 48px;
+  display: flex;
+  justify-content: space-between;
 }
 .todo__bottom {
   padding: 18px 24px;
