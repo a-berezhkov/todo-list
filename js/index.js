@@ -58,7 +58,7 @@ function deleteAllTasks() {
   render();
 }
 
-//меняем статус задачи на "выполнено"
+//меняем статус задачи на "выполнено" и наоборот
 function checkedTask(e) {
   if (e.target.classList.contains("todo__task-checkbox")) {
     const id = e.target.id;
@@ -76,9 +76,17 @@ function checkedTask(e) {
     render();
   }
 }
+//удаляем чекнутые
+function deleteCheckedTasks() {
+  tasks = tasks.filter((obj) => obj.checked === false);
+
+  setData();
+  render();
+}
 
 todoList.addEventListener("click", checkedTask);
 todoButton.addEventListener("click", createTask);
 todoButtonDelAll.addEventListener("click", deleteAllTasks);
+todoButtonDelCompleted.addEventListener("click", deleteCheckedTasks);
 
 render();
