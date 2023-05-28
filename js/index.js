@@ -31,7 +31,8 @@ function createTask() {
 
   todoInput.value !== ""
     ? tasks.push(task)
-    : (todoInput.style.border = "1px solid #DC3545");
+    : (todoInput.style.boxShadow =
+        "0px 0px 8px 0px rgba(255, 32, 32, 0.41) inset");
 
   todoInput.value = "";
   setData();
