@@ -76,15 +76,27 @@ function checkedTask(e) {
     render();
   }
 }
+
 //удаляем чекнутые
 function deleteCheckedTasks() {
   tasks = tasks.filter((obj) => obj.checked === false);
-
   setData();
   render();
 }
 
+//удаляем таску
+function deleteTask(e) {
+  if (e.target.classList.contains("todo__task-del")) {
+    const id = e.target.parentNode.querySelector(".todo__task-checkbox").id;
+
+    tasks = tasks.filter((obj) => obj.id !== id);
+    setData();
+    render();
+  }
+}
+
 todoList.addEventListener("click", checkedTask);
+todoList.addEventListener("click", deleteTask);
 todoButton.addEventListener("click", createTask);
 todoButtonDelAll.addEventListener("click", deleteAllTasks);
 todoButtonDelCompleted.addEventListener("click", deleteCheckedTasks);
