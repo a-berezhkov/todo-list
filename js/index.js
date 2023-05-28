@@ -121,10 +121,19 @@ function editTask(e) {
     e.target.classList.add("todo__hidden");
     label.classList.add("todo__hidden");
 
-    const checkbox = parentDiv.querySelector(".todo__task-checkbox");
-    const delBtn = parentDiv.querySelector(".todo__task-del");
-    checkbox.disabled = true
-    delBtn.disabled = true;
+    //убираем активность всех остальных кнопок пока редактируется таска
+    const checkboxAll = todoList.querySelectorAll(".todo__task-checkbox");
+    const delBtnAll = todoList.querySelectorAll(".todo__task-del");
+    const editBtnAll = todoList.querySelectorAll(".todo__task-edit");
+    checkboxAll.forEach((elem) => {
+      elem.disabled = true;
+    });
+    delBtnAll.forEach((elem) => {
+      elem.disabled = true;
+    });
+    editBtnAll.forEach((elem) => {
+      elem.disabled = true;
+    });
 
     //добавляем кнопку галочку и инпут
     e.target.parentNode.prepend(todoItemEditDone);
@@ -147,14 +156,13 @@ function editTask(e) {
       e.target.classList.remove("todo__hidden");
 
       //получаем айди таска
-      const id = label.parentNode.firstChild.id
+      const id = label.parentNode.firstChild.id;
 
-
-      tasks.forEach(obj => {
+      tasks.forEach((obj) => {
         if (obj.id === id) {
           obj.text = text;
         }
-      })
+      });
       setData();
       render();
     });
