@@ -124,8 +124,9 @@ ul[class] {
 }
 .todo__task-label {
   color: #54595E;
-  display: flex;
-  align-items: center;
+  max-width: 450px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .todo__task-del, .todo__task-edit, .todo__task-edit-done {
   background-color: transparent;

@@ -92,8 +92,10 @@
   }
   &__task-label {
     color: $text;
-    display: flex;
-    align-items: center;
+    max-width: 450px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
   }
   &__task-del, &__task-edit, &__task-edit-done {
     background-color: transparent;
