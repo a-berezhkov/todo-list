@@ -78,7 +78,7 @@ ul[class] {
   background-color: #404243;
 }
 .todo__list {
-  border-bottom: 1px solid #dee2e6;
+  border-top: 1px solid #dee2e6;
   padding: 32px 24px;
 }
 .todo__item {
@@ -100,6 +100,7 @@ ul[class] {
   border: 1px solid #dee2e6;
   border-radius: 2px;
   margin-right: 16px;
+  cursor: pointer;
 }
 .todo__task-checkbox:checked ~ .todo__task-label {
   text-decoration: line-through;

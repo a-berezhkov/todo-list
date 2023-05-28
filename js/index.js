@@ -8,46 +8,77 @@ import {
   todoMain,
 } from "./create.js";
 
-let tasks = JSON.parse(localStorage.getItem("tasks"));
+let tasks = getData();
 
-function createTask() {
-  todoButton.addEventListener("click", () => {
-    const id = String(Date.now());
-
-    const task = {};
-    task.text = todoInput.value;
-    task.cheked = false;
-    task.id = id;
-
-    todoInput.value !== ""
-      ? tasks.push(task)
-      : (todoInput.style.border = "1px solid #DC3545");
-
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    todoList.innerHTML = "";
-    todoInput.value = "";
-
-    render();
-  });
+//получаем из локал, если пусто - получаем пустой массив
+function getData() {
+  return JSON.parse(localStorage.getItem("tasks")) ?? [];
 }
-createTask();
 
+//записываем в локал
+function setData() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+//создаем задачу
+function createTask() {
+  const id = Date.now().toString();
+
+  const task = {};
+  task.text = todoInput.value;
+  task.checked = false;
+  task.id = id;
+
+  todoInput.value !== ""
+    ? tasks.push(task)
+    : (todoInput.style.border = "1px solid #DC3545");
+
+  todoInput.value = "";
+  setData();
+  render();
+}
+
+//отрисовываем список задач
 function render() {
-  tasks === null
-    ? (tasks = [])
-    : tasks && todoMain.classList.remove("todo__hidden");
+  todoList.innerHTML = "";
 
   tasks.forEach((task) => {
-    renderTask(task.text, task.id);
+    renderTask(task.text, task.id, task.checked);
   });
+  //если массив пустой - скрываем мэйн
+  tasks.length
+    ? todoMain.classList.remove("todo__hidden")
+    : todoMain.classList.add("todo__hidden");
 }
 
-todoButtonDelAll.addEventListener("click", deleteAllTasks);
-
+//удаляем все задачи
 function deleteAllTasks() {
-  localStorage.clear();
-  todoMain.classList.add("todo__hidden");
-  tasks = [];
+  localStorage.removeItem("tasks");
+  tasks = getData();
+  render();
 }
+
+//меняем статус задачи на "выполнено"
+function checkedTask(e) {
+  if (e.target.classList.contains("todo__task-checkbox")) {
+    const id = e.target.id;
+
+    tasks.forEach((obj) => {
+      if (obj.id === id) {
+        if (obj.checked === false) {
+          obj.checked = true;
+        } else {
+          obj.checked = false;
+        }
+      }
+    });
+    setData();
+    render();
+  }
+}
+
+todoList.addEventListener("click", checkedTask);
+todoButton.addEventListener("click", createTask);
+todoButtonDelAll.addEventListener("click", deleteAllTasks);
 
 render();
