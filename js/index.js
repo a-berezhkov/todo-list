@@ -8,20 +8,49 @@ import {
   todoMain,
 } from "./create.js";
 
-let tasks = getData();
+const url = "http://localhost:5000";
 
-//получаем из локал, если пусто - получаем пустой массив
-function getData() {
-  return JSON.parse(localStorage.getItem("tasks")) ?? [];
-}
+//функция рендера
+const render = (arr) => {
+  todoList.innerHTML = "";
 
-//записываем в локал
-function setData() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
+  arr.forEach((task) => {
+    renderTask(task.text, task.id, task.checked);
+  });
+  //если массив пустой - скрываем мэйн
+  arr.length
+    ? todoMain.classList.remove("todo__hidden")
+    : todoMain.classList.add("todo__hidden");
+};
 
-//создаем задачу
-function createTask() {
+//получаем с сервера
+const getData = () => {
+  fetch(url, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      render(data);
+    });
+};
+
+//сохраняем на сервер
+const setData = (newTask) => {
+  fetch(url + "/one", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json;charset=utf-8",
+    },
+    body: JSON.stringify(newTask),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      render(data);
+    });
+};
+
+//создать таск
+const createTask = () => {
   const id = Date.now().toString();
 
   const task = {};
@@ -29,75 +58,74 @@ function createTask() {
   task.checked = false;
   task.id = id;
 
-  todoInput.value !== ""
-    ? tasks.push(task)
-    : (todoInput.style.boxShadow =
-        "0px 0px 8px 0px rgba(255, 32, 32, 0.41) inset");
+  if (todoInput.value.length) {
+    setData(task);
+  }
 
   todoInput.value = "";
-  setData();
-  render();
-}
+};
 
-//отрисовываем список задач
-function render() {
-  todoList.innerHTML = "";
-
-  tasks.forEach((task) => {
-    renderTask(task.text, task.id, task.checked);
-  });
-  //если массив пустой - скрываем мэйн
-  tasks.length
-    ? todoMain.classList.remove("todo__hidden")
-    : todoMain.classList.add("todo__hidden");
-}
-
-//удаляем все задачи
-function deleteAllTasks() {
-  localStorage.removeItem("tasks");
-  tasks = getData();
-  render();
-}
-
-//меняем статус задачи на "выполнено" и наоборот
-function checkedTask(e) {
-  if (e.target.classList.contains("todo__task-checkbox")) {
-    const id = e.target.id;
-
-    tasks.forEach((obj) => {
-      if (obj.id === id) {
-        if (obj.checked === false) {
-          obj.checked = true;
-        } else {
-          obj.checked = false;
-        }
-      }
+//удалить все
+const deleteAllTasks = () => {
+  fetch(url + "/all", {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      render(data);
     });
-    setData();
-    render();
-  }
-}
+};
 
-//удаляем чекнутые
-function deleteCheckedTasks() {
-  tasks = tasks.filter((obj) => obj.checked === false);
-  setData();
-  render();
-}
-//удаляем таску
-function deleteTask(e) {
+//меняем статус чекбокса
+const checkedTask = (e) => {
+  if (e.target.classList.contains("todo__task-checkbox")) {
+    const idTask = e.target.id;
+
+    fetch(url + "/check", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({ id: idTask }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        render(data);
+      });
+  }
+};
+
+const deleteCheckedTasks = () => {
+  fetch(url + "/checkeds", {
+    method: "DELETE",
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      render(data);
+    });
+};
+
+const deleteTask = (e) => {
   if (e.target.classList.contains("todo__task-del")) {
-    const id = e.target.parentNode.parentNode.querySelector(
+    const idTask = e.target.parentNode.parentNode.querySelector(
       ".todo__task-checkbox"
     ).id;
 
-    tasks = tasks.filter((obj) => obj.id !== id);
-    setData();
-    render();
+    fetch(url + "/one", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({ id: idTask }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        render(data);
+      });
   }
-}
+};
 
-function editTask(e) {
+const editTask = (e) => {
   if (e.target.classList.contains("todo__task-edit")) {
     //создаем инпут
     //создаем кнопку
@@ -146,7 +174,7 @@ function editTask(e) {
     todoItemEditDone.addEventListener("click", () => {
       //текст из инпута сохраняем в text
       const newText = input.value;
-      text = newText;
+      // text = newText;
 
       //удаляем созданные ноды
       input.remove();
@@ -157,18 +185,23 @@ function editTask(e) {
       e.target.classList.remove("todo__hidden");
 
       //получаем айди таска
-      const id = label.parentNode.firstChild.id;
+      const idTask = label.parentNode.firstChild.id;
 
-      tasks.forEach((obj) => {
-        if (obj.id === id) {
-          obj.text = text;
-        }
-      });
-      setData();
-      render();
+      fetch(url + "/edit", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+        },
+        body: JSON.stringify({ id: idTask, text: newText }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          render(data);
+        });
     });
   }
-}
+};
+
 
 todoList.addEventListener("click", checkedTask);
 todoList.addEventListener("click", deleteTask);
@@ -177,4 +210,4 @@ todoButton.addEventListener("click", createTask);
 todoButtonDelAll.addEventListener("click", deleteAllTasks);
 todoButtonDelCompleted.addEventListener("click", deleteCheckedTasks);
 
-render();
+getData();
