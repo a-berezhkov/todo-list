@@ -18,4 +18,4 @@ jobs:
       # Install depend
       - run: cd server && npm ci
       # Deploy
-      - run: cd app && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@185.178.44.28:/home
+      - run: cd /home && rsync -e "ssh -p 20022 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@185.178.44.28:/todo-list
