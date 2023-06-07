@@ -51,7 +51,7 @@ class TaskController {
       response.status(500).json(error);
     }
   }
-
+  //удалить все чекнутые таски
   async deleteAllCheckedTask(request, response) {
     try {
       await Task.deleteMany({ checked: true });
@@ -62,7 +62,7 @@ class TaskController {
       response.status(500).json(error);
     }
   }
-
+  //удалить все таски
   async deleteAllTasks(request, response) {
     try {
       await Task.deleteMany({});
