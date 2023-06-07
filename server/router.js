@@ -16,12 +16,12 @@ router.put("/edit/:id", TaskController.editTask);
 router.put("/toggle/:id", TaskController.toggleCheckTask);
 
 //Удаляем один таск по id
-router.delete("/delete/:id", TaskController.deleteTask);
+router.delete("/one/:id", TaskController.deleteTask);
 
 //Удаляем все чекнутые таски
-router.delete("/delete/checked", TaskController.deleteAllCheckedTask);
+router.delete("/all/checked", TaskController.deleteAllCheckedTask);
 
 //Удаляем все таски
-router.delete("/delete/all", TaskController.deleteAllTasks);
+router.delete("/all", TaskController.deleteAllTasks);
 
 export default router;

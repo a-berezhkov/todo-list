@@ -8,7 +8,7 @@ post("/add");
 put("/edit/:id");
 
 //Удаляем один таск по id
-delete("/delete/:id");
+delete("/delete/one/:id");
 
 //Удаляем все чекнутые таски
 delete("/delete/checked");

@@ -53,7 +53,7 @@ class TaskController {
 
       response.status(200).json({ message: "Success!: task updated" });
     } catch (error) {
-      response.status(400).json({ message: "Error!: task not updated", error });
+      response.status(500).json({ message: "Error!: task not updated", error });
     }
   }
   //удалить таску по id
@@ -73,13 +73,7 @@ class TaskController {
   //удалить все чекнутые таски
   async deleteAllCheckedTask(request, response) {
     try {
-      await Task.deleteMany({ checked: { $eq: false } }, function (err, res) {
-        if (err) {
-          res.send(err);
-        } else {
-          res.send(res);
-        }
-      });
+      await Task.deleteMany({ checked: { $eq: true } });
       return response.json({
         message: "Success!: all tasks containing 'checked: true' deleted!",
       });
