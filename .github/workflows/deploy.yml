@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v3
       # Setup key
       - run: set -eu
-      - run: mkdir "$HOME/.ssh"
+      - run: mkdir  "$HOME/.ssh"
       - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
       - run: chmod 600 "$HOME/.ssh/key"
       # Install depend
-      - run: cd server && npm ci
+      - run: cd app && npm ci
       # Deploy
-      - run: cd /home && rsync -e "ssh -p 22 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@185.178.44.28:/todo-list
+      - run: cd /app && rsync -e "ssh -p 22 -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . root@185.178.44.28:/todo-list
