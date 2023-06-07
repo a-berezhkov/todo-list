@@ -38,6 +38,24 @@ class TaskController {
       response.status(400).json({ message: "Error!: task not added", error });
     }
   }
+  // переключить чекбокс таски
+  async toggleCheckTask(request, response) {
+    try {
+      const { id } = request.params;
+
+      if (!id) {
+        response.status(400).json({ message: "Error!: id not found" });
+      }
+
+      const task = await Task.findById(id);
+      task.checked = !task.checked;
+      await task.save();
+
+      response.status(200).json({ message: "Success!: task updated" });
+    } catch (error) {
+      response.status(400).json({ message: "Error!: task not updated", error });
+    }
+  }
   //удалить таску по id
   async deleteTask(request, response) {
     try {
@@ -46,31 +64,38 @@ class TaskController {
         response.status(400).json({ message: "Error!: id not found" });
       }
       await Task.findByIdAndDelete(id);
-      return response.json({ message: `"Success!: task id:${id} deleted!"` });
+      return response.json({ message: `Success!: task id:${id} deleted!` });
     } catch (error) {
       response.status(500).json(error);
     }
   }
+
   //удалить все чекнутые таски
   async deleteAllCheckedTask(request, response) {
     try {
-      await Task.deleteMany({ checked: true });
+      await Task.deleteMany({ checked: { $eq: false } }, function (err, res) {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(res);
+        }
+      });
       return response.json({
-        message: `"Success!: all tasks containing 'checked: true' deleted!"`,
+        message: "Success!: all tasks containing 'checked: true' deleted!",
       });
     } catch (error) {
       response.status(500).json(error);
     }
   }
-  //удалить все таски
+
   async deleteAllTasks(request, response) {
     try {
       await Task.deleteMany({});
       return response.json({
-        message: `"Success!: all tasks deleted!"`,
+        message: "Success!: all tasks deleted!",
       });
     } catch (error) {
-      response.status(400).json(error);
+      response.status(500).json(error);
     }
   }
 }

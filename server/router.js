@@ -9,8 +9,11 @@ router.get("/", TaskController.getAllTasks);
 //Добавляем новый таск
 router.post("/add", TaskController.addTask);
 
-//Изменяем таск по id
+//Изменяем текст таска по id
 router.put("/edit/:id", TaskController.editTask);
+
+//Изменяем чекбокс таска по id
+router.put("/toggle/:id", TaskController.toggleCheckTask);
 
 //Удаляем один таск по id
 router.delete("/delete/:id", TaskController.deleteTask);
